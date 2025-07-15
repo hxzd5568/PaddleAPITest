@@ -79,7 +79,10 @@ class Paddle2TorchConverter:
             return result
 
         rule.read_mapping(self.mapping[paddle_api])
+        print('rule---', type(rule))
         result = rule.apply(paddle_api)
+        print('result---', result)
+
         self.cached_results[paddle_api] = result
         return result
 

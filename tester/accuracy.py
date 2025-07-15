@@ -27,7 +27,6 @@ class APITestAccuracy(APITestBase):
         if self.need_skip():
             print("[Skip]", flush=True)
             return
-
         if not self.ana_api_info():
             print("ana_api_info failed", flush=True)
             return
@@ -57,6 +56,7 @@ class APITestAccuracy(APITestBase):
             return
 
         try:
+            print('enter testings: ')
             device = torch.device("cuda:0")
             torch.set_default_device(device)
             if not self.gen_torch_input():
@@ -81,6 +81,7 @@ class APITestAccuracy(APITestBase):
             # convert_result.is_torch_corresponding 为 True 时代表有对应的 Torch API
             # 执行 *_compiled 编译好的代码速度更快，定位 compile error 时可删去 _compiled
             code = convert_result.code
+            print(code)
             if code.preprocess_compiled:
                 exec(code.preprocess_compiled, exec_globals, exec_locals)
 
@@ -191,6 +192,7 @@ class APITestAccuracy(APITestBase):
         torch.cuda.empty_cache()
 
         try:
+            print('enter paddle')
             if not self.gen_paddle_input():
                 print("gen_paddle_input failed")
                 return
@@ -357,7 +359,7 @@ class APITestAccuracy(APITestBase):
                     elif 'tolist' in self.api_config.api_name:
                         self.np_assert_accuracy(numpy.array(paddle_output[i]), numpy.array(torch_output[i]), atol=self.atol, rtol=self.rtol)
                     elif not isinstance(paddle_output[i], paddle.Tensor):
-                        print("[not compare] ", paddle_output[i], torch_output[i], flush=True)
+                        print("[forward not compare] ", paddle_output[i], torch_output[i], flush=True)
                         write_to_log("accuracy_error", self.api_config.config)
                         return
                     elif not isinstance(torch_output[i], torch.Tensor):
@@ -375,7 +377,7 @@ class APITestAccuracy(APITestBase):
                             print("[accuracy error]", self.api_config.config, "\n", str(err), flush=True)
                             write_to_log("accuracy_error", self.api_config.config)
                             return
-
+        print('*'*19, 'backward')
         if torch_grad_success:
             self.is_backward = True
             try:
@@ -469,10 +471,11 @@ class APITestAccuracy(APITestBase):
                     write_to_log("accuracy_error", self.api_config.config)
                     return
                 for i in range(len(paddle_out_grads)):
+                    print('the ', i, " nd grad")
                     if isinstance(paddle_out_grads[i], int):
                         self.np_assert_accuracy(numpy.array(paddle_out_grads[i]), numpy.array(torch_out_grads[i]), atol=self.atol, rtol=self.rtol)
                     elif not isinstance(paddle_out_grads[i], paddle.Tensor):
-                        print("[not compare] ", paddle_out_grads[i], torch_out_grads[i], flush=True)
+                        print("[backward not compare] ", paddle_out_grads[i], torch_out_grads[i], flush=True)
                         write_to_log("accuracy_error", self.api_config.config)
                         return
                     elif not isinstance(torch_out_grads[i], torch.Tensor):

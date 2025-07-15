@@ -40,10 +40,12 @@ class APITestPaddleOnly(APITestBase):
                     paddle_output = self.paddle_api(*tuple(self.paddle_args), **self.paddle_kwargs)      
             else:
                 paddle_output = self.paddle_api(*tuple(self.paddle_args), **self.paddle_kwargs)
+            print('enter backward', '*'*9)
             if self.need_check_grad():
                 inputs_list = self.get_paddle_input_list()
                 result_outputs, result_outputs_grads = self.gen_paddle_output_and_output_grad(paddle_output)
                 if len(inputs_list) != 0 and len(result_outputs) != 0 and len(result_outputs_grads) != 0:
+                    print('output shape is: ', result_outputs[0].shape)
                     out_grads = paddle.grad(result_outputs, inputs_list, grad_outputs=result_outputs_grads,allow_unused=True)
         except Exception as err:
             paddle_output = None
