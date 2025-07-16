@@ -31119,7 +31119,7 @@ paddle.nn.functional.cross_entropy(Tensor([102, 42107523],"float16"), Tensor([10
 paddle.nn.functional.cross_entropy(Tensor([104, 21939437],"float32"), Tensor([104, 1],"int64"), weight=None, ignore_index=-1, reduction="sum", soft_label=False, axis=-1, use_softmax=True, label_smoothing=0.0, name=None, )
 paddle.nn.functional.cross_entropy(Tensor([104, 21939437],"float32"), label=Tensor([104, 1],"int64"), soft_label=False, reduction="mean", )
 paddle.nn.functional.cross_entropy(Tensor([104, 41297763],"float16"), Tensor([104, 1],"int64"), weight=None, ignore_index=-1, reduction="sum", soft_label=False, axis=-1, use_softmax=True, label_smoothing=0.0, name=None, )
-paddle.nn.functional.cross_entropy(Tensor([1073741825, 4],"float16"), Tensor([1073741825],"int64"), weight=None, ignore_index=0, reduction="mean", soft_label=False, axis=1, use_softmax=True, label_smoothing=0.0, name=None, )
+paddle.nn.functional.cross_entropy(Tensor([1043741825, 4],"float16"), Tensor([1043741825],"int64"), weight=None, ignore_index=0, reduction="mean", soft_label=False, axis=1, use_softmax=True, label_smoothing=0.0, name=None, )
 paddle.nn.functional.cross_entropy(Tensor([10737419, 400],"float16"), Tensor([10737419, 1],"int64"), )
 paddle.nn.functional.cross_entropy(Tensor([10762743, 212],"float32"), Tensor([10762743, 1],"int64"), weight=None, ignore_index=-1, reduction="sum", soft_label=False, axis=-1, use_softmax=True, label_smoothing=0.0, name=None, )
 paddle.nn.functional.cross_entropy(Tensor([114085069, 20],"float32"), Tensor([114085069, 1],"int64"), reduction="none", use_softmax=True, )
